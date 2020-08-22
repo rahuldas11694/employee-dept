@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 });*/
 
 Route::group(['prefix' => 'v1'], function () {
-    Route::group(['namespace' => 'Api'], function () {
+    Route::group(['namespace' => 'Api\v1'], function () {
 
         Route::post('department', 'DepartmentsController@createDept');
         Route::put('department/{dept_id}', 'DepartmentsController@updateDept');
@@ -32,6 +32,9 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('employees', 'EmployeesController@getAllEmployees');
         Route::get('employee/{emp_id}', 'EmployeesController@getEmployee');
         Route::delete('employee/{emp_id}', 'EmployeesController@deleteEmployee');
+        Route::get('employee', 'EmployeesController@searchEmployee');
+
+
 
     });
 });

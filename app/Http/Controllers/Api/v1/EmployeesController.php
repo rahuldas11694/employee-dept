@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-use App\Http\Controllers\Api\DepartmentsController;
+use App\Http\Controllers\Api\v1\DepartmentsController;
 
 use App\Models\{Departments, Employees};
 
@@ -161,5 +161,13 @@ class EmployeesController extends DepartmentsController
         $this->empModel->deleteEmp($emp_id);
 
         return $this->respondOk("Employee deleted successfully.", $this->successCode);
+    }
+
+    public function searchEmployee(Request $request){
+        $employee_str   = $request->name ?? "";
+        $employee_name  = trim($employee_str);
+
+        $this->empModel->getEmployeesByName($employee_name);
+
     }
 }

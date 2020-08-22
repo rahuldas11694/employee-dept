@@ -34,4 +34,10 @@ class Employees extends Model
     public function deleteEmp(int $empId){
         return self::findOrFail($empId)->delete();
     }
+
+    public function getEmployeesByName(){
+        
+        return self::where('dept_name', '=', $deptName)
+                    ->first();
+    }
 }
