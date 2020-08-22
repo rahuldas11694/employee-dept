@@ -101,6 +101,10 @@ class EmployeesController extends DepartmentsController
             if(!$this->empModel->getEmployeeById($emp_id)){
                 return $this->respondOk("Employee does not exists.", $this->userCode);
             }
+            // also check if dept exists, update only if dept exists
+            if(!$this->deptModel->getDeptById($dept_id)){
+                return $this->respondOk("Department does not exists.", $this->userCode);
+            }
 
             $emp_id = $this->empModel->updateWhere($where, $tobe_updated);
 
@@ -143,5 +147,19 @@ class EmployeesController extends DepartmentsController
         $employee = collect($employee)->except(['fk_dept_id', 'created_at', 'updated_at']);
 
         return $this->respondOk($employee, $this->successCode);
+    }
+
+    public function deleteEmployee(Request $request){
+       $emp_id     = (int) $request->route('emp_id') ?? 0;
+
+       $employee = $this->empModel->getEmployeeById($emp_id);
+
+        if(!$employee){
+            return $this->respondOk("Employee does not exists.", $this->userCode);
+        }
+
+        $this->empModel->deleteEmp($emp_id);
+
+        return $this->respondOk("Employee deleted successfully.", $this->successCode);
     }
 }

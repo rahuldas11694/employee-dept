@@ -98,11 +98,25 @@ class DepartmentsController extends Controller
         }
     }
 
-
     public function getAllDepartments(Request $request){
 
     }
+
     public function getDepartment(Request $request){
 
+    }
+
+    public function deleteDepartment(Request $request){
+        $dept_id     = (int) $request->route('dept_id') ?? 0;
+
+        $employee = $this->deptModel->getDeptById($dept_id);
+
+        if(!$employee){
+            return $this->respondOk("Department does not exists.", $this->userCode);
+        }
+
+        $this->deptModel->deleteDept($dept_id);
+
+        return $this->respondOk("Department deleted successfully.", $this->successCode);    
     }
 }

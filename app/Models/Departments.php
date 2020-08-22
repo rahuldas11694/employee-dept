@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Departments extends Model
 {
     protected $table = "departments";
+    protected $primaryKey = "dept_id"; 
 
     public function getAll(){
         return self::all();
@@ -38,5 +39,9 @@ class Departments extends Model
     public function getDeptById(int $id){
         return self::where("dept_id", $id)
                     ->first();
+    }
+
+    public function deleteDept(int $empId){
+        return self::findOrFail($empId)->delete();
     }
 }

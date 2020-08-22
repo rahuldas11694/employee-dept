@@ -8,6 +8,7 @@ class Employees extends Model
 {
 
     protected $table = "employees";
+    protected $primaryKey = "emp_id"; 
 
     public function insertEmp(array $tobeInserted){
         return self::insertGetId($tobeInserted);
@@ -30,4 +31,7 @@ class Employees extends Model
         return $flag;                
     }
 
+    public function deleteEmp(int $empId){
+        return self::findOrFail($empId)->delete();
+    }
 }
