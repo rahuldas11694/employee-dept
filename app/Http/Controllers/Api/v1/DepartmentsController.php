@@ -40,7 +40,7 @@ class DepartmentsController extends Controller
     * 
     * @bodyParam  dept_name string required The name of the Department. Example: Sales
     *
-    *   {
+    * @response  {
     *    "responseNo": 0,
     *    "message": "Department Created successfully."
     *   }
@@ -86,7 +86,7 @@ class DepartmentsController extends Controller
     * @urlParam  dept_id required The ID of the department. Example: 111
     * @bodyParam  dept_name string required The name of the Department. Example: Development
     *
-    *   {
+    * @response  {
     *    "responseNo": 0,
     *    "message": "Department updated successfully."
     *   }
@@ -134,8 +134,33 @@ class DepartmentsController extends Controller
 
     }
 
+    /**
+    * Get Department
+    * 
+    * @urlParam  dept_id required The ID of the department. Example: 1
+    *
+    * @response  {
+    *    "responseNo": 0,
+    *     "data": {
+    *        "dept_id": 2,
+    *        "dept_name": "tested"
+    *      }
+    *    }
+    */
+    
     public function getDepartment(Request $request){
+        $inputs    = $request->input();
+        $dept_id    = (int) $request->route('dept_id') ?? 0;
 
+        $department = $this->deptModel->getDeptById($dept_id);
+
+        if(!$department){
+            return $this->respondOk("Department does not exists.", $this->userCode);
+        }
+
+        $department = collect($department)->except(['created_at', 'updated_at']);
+
+        return $this->respondOk($department, $this->successCode);
     }
 
     /**
@@ -143,7 +168,7 @@ class DepartmentsController extends Controller
     * 
     * @urlParam  dept_id required The ID of the department.
     *
-    *   {
+    * @response  {
     *    "responseNo": 0,
     *    "message": "Department deleted successfully."
     *   }
