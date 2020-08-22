@@ -20,6 +20,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'v1'], function () {
     Route::group(['namespace' => 'Api'], function () {
+
         Route::post('department', 'DepartmentsController@createDept');
+        Route::put('department/{dept_id}', 'DepartmentsController@updateDept');
+        Route::get('departments', 'DepartmentsController@getAllDepartments');
+        Route::get('department/{dept_id}', 'DepartmentsController@getDepartment');
+        
     });
 });
