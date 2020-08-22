@@ -20,7 +20,7 @@ class DepartmentsController extends Controller
     public function __construct(Departments $deptModel){
         
         $this->deptModel = $deptModel;
-
+        // dd("parent");
     }
 
     public function index(){
@@ -80,7 +80,7 @@ class DepartmentsController extends Controller
 
             // check if dept exists if no then create dept
             $where = ["dept_id" => $dept_id];
-            
+
             if(!$this->deptModel->getDeptById($dept_id)){
                 return $this->respondOk("Department does not exists.", $this->userCode);
             }

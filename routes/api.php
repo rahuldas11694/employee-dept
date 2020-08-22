@@ -25,6 +25,11 @@ Route::group(['prefix' => 'v1'], function () {
         Route::put('department/{dept_id}', 'DepartmentsController@updateDept');
         Route::get('departments', 'DepartmentsController@getAllDepartments');
         Route::get('department/{dept_id}', 'DepartmentsController@getDepartment');
-        
+
+        Route::post('employee', 'EmployeesController@createEmp');
+        Route::put('employee/{emp_id}', 'EmployeesController@updateEmp');
+        Route::get('employees', 'EmployeesController@getAllEmployees');
+        Route::get('employee/{emp_id}', 'EmployeesController@getEmployee');
+
     });
 });
