@@ -17,4 +17,8 @@ class Employees extends Model
         return self::where("emp_id", $id)
                 ->first();
     }
+
+    public function getAllEmps(){
+        return self::all();
+    }
 }

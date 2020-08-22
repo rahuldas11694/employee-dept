@@ -68,7 +68,18 @@ class EmployeesController extends DepartmentsController
     }
     
     public function getAllEmployees(Request $request){
+        $emps = $this->empModel->getAllEmps();
         
+        $emps->each(function($employee){
+            
+            $employee->dept_id          = $employee->fk_dept_id;
+            $employee->addresses        = json_decode($employee->addresses);
+            $employee->contact_numbers  = json_decode($employee->contact_numbers);
+
+            unset($employee->fk_dept_id, $employee->created_at, $employee->updated_at);
+        });
+
+        return $this->respondOk($emps, $this->successCode);
     }
     
     public function getEmployee(Request $request){
