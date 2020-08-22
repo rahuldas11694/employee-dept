@@ -21,4 +21,13 @@ class Employees extends Model
     public function getAllEmps(){
         return self::all();
     }
+
+    public function updateWhere(array $where = [], $tobeUpdated){
+
+        $flag = self::where($where)
+                ->update($tobeUpdated);
+        
+        return $flag;                
+    }
+
 }

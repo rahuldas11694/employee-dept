@@ -25,8 +25,6 @@ class EmployeesController extends DepartmentsController
 
         $emp_addresses          = isset($inputs["addresses"]) ? json_encode($inputs["addresses"]) : null;
         $emp_contact_numbers    = isset($inputs["contact_numbers"]) ? json_encode($inputs["contact_numbers"]) : null;
-
-        
         // validate fields
         try {
             $validator = Validator::make(
@@ -64,7 +62,53 @@ class EmployeesController extends DepartmentsController
     }
     
     public function updateEmp(Request $request){
+        $inputs     = $request->input();
+        $emp_id     = (int) $request->route('emp_id') ?? 0;
 
+        $dept_id    = $inputs['dept_id'] ?? 0;
+        $emp_name   = $inputs['emp_name'] ?? "";
+
+        $emp_addresses          = isset($inputs["addresses"]) ? json_encode($inputs["addresses"]) : null;
+        $emp_contact_numbers    = isset($inputs["contact_numbers"]) ? json_encode($inputs["contact_numbers"]) : null;
+        // validate fields
+        try {
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'emp_name' => 'required',
+                    'dept_id' => 'required',
+                    'addresses' => 'required|sometimes',
+                    'contact_numbers' => 'required|sometimes'
+                ]
+            );
+            // if validation fails then throw error
+            if ($validator->fails()) {
+                return $this->respondWithValidationError($validator->errors());
+            }elseif($emp_name == ""){
+                return $this->respondOk("Employee name can not be blank", $this->userCode);
+            }
+
+            $where = ['emp_id' => $emp_id];
+
+            $tobe_updated = [
+                            'emp_name' => $emp_name,
+                            'fk_dept_id' => $dept_id,
+                            'addresses' => $emp_addresses,
+                            'contact_numbers' => $emp_contact_numbers,
+                        ];
+
+            // check if emp exists if yes then update emp else err
+            if(!$this->empModel->getEmployeeById($emp_id)){
+                return $this->respondOk("Employee does not exists.", $this->userCode);
+            }
+
+            $emp_id = $this->empModel->updateWhere($where, $tobe_updated);
+
+            return $this->respondOk("Employee updated successfully.", $this->successCode);
+
+        } catch (\Exception $e) {
+            return $this->respondWithError($e->getMessage());
+        }
     }
     
     public function getAllEmployees(Request $request){
