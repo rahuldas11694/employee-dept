@@ -18,12 +18,23 @@ class DepartmentsController extends Controller
 {   
 
     protected $deptModel;
+    
     /**
-    * Response Numbers for api response
+    * @var $successCode means apis goal was achieved i.e success 
     */
     protected $successCode = 0;
-    protected $systemCode  = -1;
+
+    /**
+    * @var $userCode means apis goal was not not achieved and was a user error (e.g some reqd field missing in body param) 
+    */
     protected $userCode    = 1;
+
+
+    /**
+    * @var $systemCode means apis goal was not not achieved and some system error/server error
+    */
+    protected $systemCode  = -1;
+
 
     public function __construct(Departments $deptModel){
         

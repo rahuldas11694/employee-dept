@@ -211,7 +211,7 @@ class EmployeesController extends DepartmentsController
             $employee->dept_id          = $employee->fk_dept_id;
             $employee->addresses        = json_decode($employee->addresses);
             $employee->contact_numbers  = json_decode($employee->contact_numbers);
-
+            // unset not required things in response 
             unset($employee->fk_dept_id, $employee->created_at, $employee->updated_at);
         });
 
@@ -352,7 +352,7 @@ class EmployeesController extends DepartmentsController
             $employee->dept_id          = $employee->fk_dept_id;
             $employee->addresses        = json_decode($employee->addresses);
             $employee->contact_numbers  = json_decode($employee->contact_numbers);
-
+            // unset not required things in response
             unset($employee->fk_dept_id, $employee->created_at, $employee->updated_at);
         });
 
