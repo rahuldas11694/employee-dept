@@ -41,6 +41,7 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+// $app->register(\Mpociot\ApiDoc\ApiDocGeneratorServiceProvider::class);
 /*
 |--------------------------------------------------------------------------
 | Return The Application

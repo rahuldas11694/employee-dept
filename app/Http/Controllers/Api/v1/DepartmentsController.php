@@ -8,11 +8,19 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Models\{Departments};
 
+/**
+* @group Company Department manageent
+*
+* Department APIs
+*/
+
 class DepartmentsController extends Controller
 {   
 
     protected $deptModel;
-
+    /**
+    * Response Numbers for api response
+    */
     protected $successCode = 0;
     protected $systemCode  = -1;
     protected $userCode    = 1;
@@ -27,6 +35,17 @@ class DepartmentsController extends Controller
         //
     }
 
+    /**
+    * Create a Department
+    * 
+    * @bodyParam  dept_name string required The name of the Department. Example: Sales
+    *
+    *   {
+    *    "responseNo": 0,
+    *    "message": "Department Created successfully."
+    *   }
+    *
+    */
     public function createDept(Request $request){
         $inputs     = $request->input();
         $dept_name   = $inputs["dept_name"] ?? "";
@@ -60,6 +79,19 @@ class DepartmentsController extends Controller
             return $this->respondWithError($e->getMessage());
         }
     }
+
+    /**
+    * Update a Department
+    * 
+    * @urlParam  dept_id required The ID of the department. Example: 111
+    * @bodyParam  dept_name string required The name of the Department. Example: Development
+    *
+    *   {
+    *    "responseNo": 0,
+    *    "message": "Department updated successfully."
+    *   }
+    *
+    */
 
     public function updateDept(Request $request){
         $inputs     = $request->input();
@@ -105,6 +137,18 @@ class DepartmentsController extends Controller
     public function getDepartment(Request $request){
 
     }
+
+    /**
+    * Delete a Department
+    * 
+    * @urlParam  dept_id required The ID of the department.
+    *
+    *   {
+    *    "responseNo": 0,
+    *    "message": "Department deleted successfully."
+    *   }
+    *
+    */
 
     public function deleteDepartment(Request $request){
         $dept_id     = (int) $request->route('dept_id') ?? 0;
